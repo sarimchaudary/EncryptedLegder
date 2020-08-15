@@ -23,33 +23,35 @@ namespace EncryptedLedgerExample
             {
             }
             var container = new ProgramInjection("786", "1234567890123456").Inject();
-            using var scope = container.BeginLifetimeScope();
-            var transaction = scope.Resolve<ILedgerTransaction<int>>();
-            var crypto = scope.Resolve<ICryptography>();
-            var crud = scope.Resolve<ILedgerCrud<int>>();
-            //Transaction Code
-            //var enc = transaction.DoATransactionOf(1000)
-            //            .From(new Transactionee { PreviousBalance = 4000, PrimaryKey = 1 })
-            //            .To(new Transactionee { PrimaryKey = 2, PreviousBalance = 8000 })
-            //            .On(DateTime.Now)
-            //            .DueTo("Other reason")
-            //            .With("abc")
-            //            .And("xyz")
-            //            .And("xyz2")
-            //            .And("xyz3")
-            //            .Done();
-            //enc.ForEach((x) =>
-            //{
-            //    crud.CreateEntry(x);
-            //});
-            var enc = crud.ReadEntry(2, out bool isVerified);
-            foreach (var line in enc.ToString().Split(","))
+            using (var scope = container.BeginLifetimeScope())
             {
-                Console.WriteLine(line);
-            }
-            foreach (var line in enc.ToString().Split(","))
-            {
-                Console.WriteLine(line);
+                var transaction = scope.Resolve<ILedgerTransaction<int>>();
+                var crypto = scope.Resolve<ICryptography>();
+                var crud = scope.Resolve<ILedgerCrud<int>>();
+                //Transaction Code
+                //var enc = transaction.DoATransactionOf(1000)
+                //            .From(new Transactionee { PreviousBalance = 4000, PrimaryKey = 1 })
+                //            .To(new Transactionee { PrimaryKey = 2, PreviousBalance = 8000 })
+                //            .On(DateTime.Now)
+                //            .DueTo("Other reason")
+                //            .With("abc")
+                //            .And("xyz")
+                //            .And("xyz2")
+                //            .And("xyz3")
+                //            .Done();
+                //enc.ForEach((x) =>
+                //{
+                //    crud.CreateEntry(x);
+                //});
+                var enc = crud.ReadEntry(2, out bool isVerified);
+                foreach (var line in enc.ToString().Split(","))
+                {
+                    Console.WriteLine(line);
+                }
+                foreach (var line in enc.ToString().Split(","))
+                {
+                    Console.WriteLine(line);
+                }
             }
             Console.WriteLine($"verified: {isVerified}");
             Console.ReadLine();
